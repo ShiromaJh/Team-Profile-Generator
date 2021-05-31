@@ -1,3 +1,4 @@
+
 # Team Profile Generator  ![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)
 Team Profile Generator## Table of Contents:
 * [Installation](#installation)
@@ -23,7 +24,7 @@ To test:
 npm test
 
 ![tg](https://user-images.githubusercontent.com/78002356/120141975-15880d80-c1a3-11eb-9316-393ad8cd6f83.JPG)
-
+Application walkthrough - https://youtu.be/iLhqvU2DLRM
 
 ### Questions:
 If you have any questions contact me on [GitHub](https://github.com/shiromajh) or contact 
