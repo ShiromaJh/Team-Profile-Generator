@@ -1,11 +1,11 @@
-const inquirer = require('inquirer');
-const fs = require('fs');
-const generatedPage = './dist/index.html';
+const inquirer = require("inquirer");
+const fs = require("fs");
+const generatedPage = "./dist/index.html";
 
 //classes for employees
-const Manager = require('./lib/manager');
-const Engineer = require('./lib/engineer');
-const Intern = require('./lib/intern');
+const Manager = require("./lib/manager");
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
 
 let EmployeesArr = [];
 
@@ -38,7 +38,7 @@ inquirer
       choices: ["Intern", "Engineer", "Done"],
     },
   ])
-  .then(answers => {
+  .then((answers) => {
     let manager = new Manager(
       answers.ManagerName,
       answers.ManagerId,
@@ -46,21 +46,13 @@ inquirer
       answers.ManagerOffice
     );
     EmployeesArr.push(manager);
-    if (answers.EmployeeList === "Engineer") {
-      addEngr();
-    } else if (answers.EmployeeList === "Intern") {
-      addIntern();
-    } else {
-      
-      generateHTML();
-    }
+    Result(answers.EmployeeList);
   })
   .catch((error) => {
     if (error.isTtyError) {
-    } else {}
+    } else {
+    }
   });
-
-
 
 function addEngr() {
   inquirer
@@ -93,7 +85,7 @@ function addEngr() {
       },
     ])
 
-    .then(answers => {
+    .then((answers) => {
       let engineer = new Engineer(
         answers.name,
         answers.Id,
@@ -101,13 +93,7 @@ function addEngr() {
         answers.School
       );
       EmployeesArr.push(engineer);
-      if (answers.EmployeeList === "Engineer") {
-        addEngr();
-      } else if (answers.EmployeeList === "Intern") {
-        addIntern();
-      } else {
-        generateHTML();
-      }
+      Result(answers.EmployeeList);
     })
     .catch((error) => {
       if (error.isTtyError) {
@@ -147,7 +133,7 @@ function addIntern() {
       },
     ])
 
-    .then(answers => {
+    .then((answers) => {
       let intern = new Intern(
         answers.name,
         answers.Id,
@@ -155,23 +141,69 @@ function addIntern() {
         answers.School
       );
       EmployeesArr.push(intern);
-      if (answers.EmployeeList === "Engineer") {
-        addEngr();
-      } else if (answers.EmployeeList === "Intern") {
-        addIntern();
-      } else {
-        generateHTML();
-      }
+      Result(answers.EmployeeList);
     })
     .catch((error) => {
       if (error.isTtyError) {
       } else {
       }
     });
+}
+function Result(result) {
+  if (result === "Engineer") {
+    addEngr();
+  } else if (result === "Intern") {
+    addIntern();
+  } else {
+    generateHTML();
+  }
+}
 
-    
+function genFirstHTML() {
+  return `<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Team Profile Page</title>
+        <link rel="stylesheet" href="./style.css" />
+      </head>
+      <body>
+        <div class="NavBar">
+            <h1 class="NavBarTitle">Team</h2>
+        </div>
+        <div class="employeeCardBody"> `;
+}
+function genEmployeeCard(employee) {
+  return `<div class="employeeCard">
+ <div class="teamMemberTitle">
+     <h3>${employee.getName()} - ${employee.getRole()}</h3>
+ </div>
+ <div class="teamMemberBody">
+     <ul>
+         <li>ID:${employee.getId()}</li>
+         <li>Email: <a href="mailto:${employee.getEmail()}">${employee.getEmail()}</a></li>
+        
+     </ul>
+ </div>
+</div>`;
+}
+
+function genLastHTML() {
+  return `</div>
+    </body>
+    </html>`;
 }
 
 function generateHTML() {
-   fs.writeFileSync(generatedPage, "");
+  fs.writeFileSync(generatedPage,"");
+  let htmlData = genFirstHTML();
+
+  for (var a in EmployeesArr) {
+    htmlData += genEmployeeCard(EmployeesArr[a]);
+  }
+
+  htmlData += genLastHTML();
+  fs.writeFileSync(generatedPage, htmlData);
 }

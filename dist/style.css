@@ -1,0 +1,40 @@
+.NavBar {
+  background-color: bisque;
+  text-align: center;
+  color: black;
+  height: 80px;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.NavBarTitle {
+  margin: auto;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  height: 100%;
+}
+.employeeCardBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: black;
+}
+
+.employeeCard {
+  width: 275px;
+  height: 400px;
+  background-color: lightblue;
+  padding: 15px;
+  margin: 8%;
+  box-shadow: 8px 8px 4px black;
+  
+}
+
+.employeeTitle{
+    color: white;
+}
