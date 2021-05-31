@@ -1,18 +1,13 @@
-const inquirer = require("inquirer");
-const fs = require("fs");
-const generatePage = "./dist/index.html";
+const inquirer = require('inquirer');
+const fs = require('fs');
+const generatedPage = './dist/index.html';
 
 //classes for employees
-const Manager = require("./lib/manager");
-const Engineer = require("./lib/engineer");
-const Intern = require("./lib/intern");
+const Manager = require('./lib/manager');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
 
 let EmployeesArr = [];
-
-function addEmployee(teamate) {
-  if (teamate === "Manager") {
-  }
-}
 
 inquirer
   .prompt([
@@ -40,10 +35,10 @@ inquirer
       type: "list",
       name: "EmployeeList",
       message: "Select which type of team member to add",
-      choices: ["Intern", "Engineer"],
+      choices: ["Intern", "Engineer", "Done"],
     },
   ])
-  .then((answers) => {
+  .then(answers => {
     let manager = new Manager(
       answers.ManagerName,
       answers.ManagerId,
@@ -56,14 +51,16 @@ inquirer
     } else if (answers.EmployeeList === "Intern") {
       addIntern();
     } else {
-      generatePage();
+      
+      generateHTML();
     }
   })
   .catch((error) => {
     if (error.isTtyError) {
-    } else {
-    }
+    } else {}
   });
+
+
 
 function addEngr() {
   inquirer
@@ -96,20 +93,20 @@ function addEngr() {
       },
     ])
 
-    .then((answers) => {
-      let intern = new Intern(
+    .then(answers => {
+      let engineer = new Engineer(
         answers.name,
         answers.Id,
         answers.Email,
         answers.School
       );
-      EmployeesArr.push(teamate);
+      EmployeesArr.push(engineer);
       if (answers.EmployeeList === "Engineer") {
         addEngr();
       } else if (answers.EmployeeList === "Intern") {
         addIntern();
       } else {
-        generatePage();
+        generateHTML();
       }
     })
     .catch((error) => {
@@ -150,20 +147,20 @@ function addIntern() {
       },
     ])
 
-    .then((answers) => {
+    .then(answers => {
       let intern = new Intern(
         answers.name,
         answers.Id,
         answers.Email,
         answers.School
       );
-      EmployeesArr.push(teamate);
+      EmployeesArr.push(intern);
       if (answers.EmployeeList === "Engineer") {
         addEngr();
       } else if (answers.EmployeeList === "Intern") {
         addIntern();
       } else {
-        generatePage();
+        generateHTML();
       }
     })
     .catch((error) => {
@@ -171,4 +168,10 @@ function addIntern() {
       } else {
       }
     });
+
+    
+}
+
+function generateHTML() {
+   fs.writeFileSync(generatedPage, "");
 }
