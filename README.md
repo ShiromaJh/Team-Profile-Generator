@@ -22,6 +22,7 @@ none
 To test:
 npm test
 
+![tg](https://user-images.githubusercontent.com/78002356/120141975-15880d80-c1a3-11eb-9316-393ad8cd6f83.JPG)
 
 
 ### Questions:
